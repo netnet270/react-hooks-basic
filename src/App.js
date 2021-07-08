@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.scss';
+import ToDoList from './components/ToDoList';
 
 function App() {
+
+  const initTodoList = [
+    { id: '1', title: 'React-basicccc' },
+    { id: '2', title: 'React-Hooks' },
+    { id: '3', title: 'Redux-Toolkit' }
+  ];
+
+  const [TodoList, setTodoList] = useState(initTodoList);
+
+  function handleTodoClick(item) {
+    const index = TodoList.findIndex(x => x.id === item.id)
+    const newToDoList = [...TodoList];
+    newToDoList.splice(index, 1);
+    setTodoList(newToDoList);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ToDoList todos={TodoList} onTodoClick={handleTodoClick} />
     </div>
   );
 }
